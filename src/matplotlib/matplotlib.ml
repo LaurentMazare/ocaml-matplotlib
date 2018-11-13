@@ -58,7 +58,8 @@ end
 type t = Py.Object.t
 
 let init backend =
-  Py.initialize ();
+  if not (Py.is_initialized ())
+  then Py.initialize ();
   let plt = Py.import "matplotlib.pyplot" in
   Option.iter (Backend.to_string_option backend) ~f:(fun backend_str ->
     ignore (plt.&("switch_backend")[| Py.String.of_string backend_str |]));
