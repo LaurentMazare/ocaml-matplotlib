@@ -1,0 +1,5 @@
+(library
+  (name matplotlib)
+  (public_name matplotlib)
+  (flags (-linkall))
+  (libraries base pyml))

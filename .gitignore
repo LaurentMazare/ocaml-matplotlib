@@ -1,0 +1,29 @@
+*.annot
+*.cmo
+*.cma
+*.cmi
+*.a
+*.o
+*.cmx
+*.cmxs
+*.cmxa
+*.swp
+*.ipynb_checkpoints
+
+# ocamlbuild working directory
+_build/
+
+# dataset directory
+data/
+
+# ocamlbuild targets
+*.byte
+*.native
+
+# oasis generated files
+setup.data
+setup.log
+torch.install
+
+# Merlin configuring file for Vim and Emacs
+.merlin

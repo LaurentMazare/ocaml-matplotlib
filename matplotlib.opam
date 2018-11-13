@@ -1,0 +1,32 @@
+opam-version: "2.0"
+name:         "matplotlib"
+bug-reports:  "https://github.com/LaurentMazare/ocaml-matplotlib/issues"
+homepage:     "https://github.com/LaurentMazare/ocaml-matplotlib"
+dev-repo:     "git+https://github.com/LaurentMazare/ocaml-matplotlib.git"
+maintainer:   "Laurent Mazare <lmazare@gmail.com>"
+authors:      [ "Laurent Mazare" ]
+
+version: "dev"
+
+build: [["dune" "build" "-j" jobs "@install"]]
+
+install: []
+remove:  []
+
+depends: [
+  "base" {>= "0.11.0"}
+  "stdio"
+  "pyml"
+  "jupyter"
+  "dune" {build}
+  "ocaml" {>= "4.06"}
+]
+
+depopts: [
+]
+
+conflicts: [
+]
+
+available: [
+]
