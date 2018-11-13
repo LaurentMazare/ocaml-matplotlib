@@ -1,5 +1,3 @@
-type t
-
 module Backend : sig
   type t =
     | Agg
@@ -26,18 +24,26 @@ module Linestyle : sig
     | Other of string
 end
 
-val init : Backend.t -> t
-val xlabel : t -> string -> unit
-val ylabel : t -> string -> unit
-val grid : t -> bool -> unit
+(* Vector of float *)
+module V : sig
+  type t
+  val l : float list -> t
+  val a : float array -> t
+end
+
+val init : Backend.t -> unit
+val xlabel : string -> unit
+val ylabel : string -> unit
+val grid : bool -> unit
+val title : string -> unit
 
 val plot
   :  ?color:Color.t
   -> ?linewidth:float
   -> ?linestyle:Linestyle.t
-  -> t
-  -> xys:(float * float) list
+  -> ?xs:V.t
+  -> V.t
   -> unit
 
-val show : t -> unit
-val savefig : t -> string -> unit
+val show : unit -> unit
+val savefig : string -> unit
