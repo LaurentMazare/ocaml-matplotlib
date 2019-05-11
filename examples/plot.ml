@@ -13,4 +13,8 @@ let () =
   Matplotlib.plot ~color:Red ~xs ys1;
   Matplotlib.plot ~color:Green ~linestyle:Dotted ~linewidth:2. ~xs ys2;
   Matplotlib.savefig "test.png";
+  let data = Matplotlib.plot_data `png in
+  let out_channel = Caml.open_out "test2.png" in
+  Caml.output_string out_channel data;
+  Caml.close_out out_channel;
   Matplotlib.show ()

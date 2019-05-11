@@ -47,3 +47,4 @@ val plot
 
 val show : unit -> unit
 val savefig : string -> unit
+val plot_data : [`png | `jpg] -> string

@@ -112,6 +112,24 @@ let savefig filename =
   let t = maybe_init () in
   ignore (t.&("savefig")[| Py.String.of_string filename |])
 
+let plot_data format =
+  let t = maybe_init () in
+  let format =
+    match format with
+    | `png -> "png"
+    | `jpg -> "jpg"
+  in
+  let io = Py.import "io" in
+  let bytes_io = io.&("BytesIO")[||] in
+  let _ =
+    Py.Module.get_function_with_keywords
+      t
+      "savefig"
+      [| bytes_io |]
+      [ "format", Py.String.of_string format ]
+  in
+  bytes_io.&("getvalue")[||] |> Py.String.to_string
+
 let plot ?color ?linewidth ?linestyle ?xs ys =
   let t = maybe_init () in
   let keywords =
