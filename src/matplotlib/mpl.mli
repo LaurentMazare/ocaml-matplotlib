@@ -75,9 +75,21 @@ end
 (* Only internal functions below. *)
 val plot
   :  Py.Object.t
+  -> ?label:string
   -> ?color:Color.t
   -> ?linewidth:float
   -> ?linestyle:Linestyle.t
   -> ?xs:float array
+  -> float array
+  -> unit
+
+val hist
+  : Py.Object.t
+  -> ?label:string
+  -> ?color:Color.t
+  -> ?bins:int
+  -> ?orientation:[ `horizontal | `vertical ]
+  -> ?histtype:[ `bar | `barstacked | `step | `stepfilled ]
+  -> ?xs:float array list
   -> float array
   -> unit

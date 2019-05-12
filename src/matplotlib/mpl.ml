@@ -125,12 +125,13 @@ end
 let float_array_to_python xs =
   Py.List.of_array_map Py.Float.of_float xs
 
-let plot p ?color ?linewidth ?linestyle ?xs ys =
+let plot p ?label ?color ?linewidth ?linestyle ?xs ys =
   let keywords =
     List.filter_opt
       [ Option.map color ~f:(fun color -> "color", Color.to_pyobject color)
       ; Option.map linewidth ~f:(fun lw -> "linewidth", Py.Float.of_float lw)
       ; Option.map linestyle ~f:(fun ls -> "linestyle", Linestyle.to_pyobject ls)
+      ; Option.map label ~f:(fun l -> "label", Py.String.of_string l)
       ]
   in
   let args =
@@ -139,3 +140,34 @@ let plot p ?color ?linewidth ?linestyle ?xs ys =
     | None -> [| float_array_to_python ys |]
   in
   ignore (Py.Module.get_function_with_keywords p "plot" args keywords)
+
+let hist p ?label ?color ?bins ?orientation ?histtype ?xs ys =
+  let keywords =
+    List.filter_opt
+      [ Option.map color ~f:(fun color -> "color", Color.to_pyobject color)
+      ; Option.map label ~f:(fun l -> "label", Py.String.of_string l)
+      ; Option.map bins ~f:(fun b -> "bins", Py.Int.of_int b)
+      ; Option.map orientation ~f:(fun o ->
+        let o =
+          match o with
+          | `horizontal -> "horizontal"
+          | `vertical -> "vertical"
+        in
+        "orientation", Py.String.of_string o)
+      ; Option.map histtype ~f:(fun h ->
+        let h =
+          match h with
+          | `bar -> "bar"
+          | `barstacked -> "barstacked"
+          | `step -> "step"
+          | `stepfilled -> "stepfilled"
+        in
+        "histtype", Py.String.of_string h)
+      ]
+  in
+  let args =
+    match xs with
+    | Some xs -> [| List.map (ys::xs) ~f:float_array_to_python |> Py.List.of_list |]
+    | None -> [| float_array_to_python ys |]
+  in
+  ignore (Py.Module.get_function_with_keywords p "hist" args keywords)

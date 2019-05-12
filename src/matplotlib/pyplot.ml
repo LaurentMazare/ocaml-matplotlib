@@ -17,6 +17,10 @@ let grid b =
   let p = Mpl.pyplot_module () in
   ignore (p.&("grid")[| Py.Bool.of_bool b |])
 
-let plot ?color ?linewidth ?linestyle ?xs ys =
+let plot ?label ?color ?linewidth ?linestyle ?xs ys =
   let p = Mpl.pyplot_module () in
-  Mpl.plot p ?color ?linewidth ?linestyle ?xs ys
+  Mpl.plot p ?label ?color ?linewidth ?linestyle ?xs ys
+
+let hist ?label ?color ?bins ?orientation ?histtype ?xs ys =
+  let p = Mpl.pyplot_module () in
+  Mpl.hist p ?label ?color ?bins ?orientation ?histtype ?xs ys

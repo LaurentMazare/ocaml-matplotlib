@@ -40,8 +40,32 @@ module Ax = struct
     in
     ignore (Py.Module.get_function_with_keywords t "grid" [||] keywords)
 
-  let plot t ?color ?linewidth ?linestyle ?xs ys =
-    Mpl.plot t ?color ?linewidth ?linestyle ?xs ys
+  let legend ?loc t =
+    let keywords =
+      let loc =
+        Option.map loc ~f:(fun loc ->
+          let loc =
+            match loc with
+            | `best -> "best"
+            | `upper_right -> "upper right"
+            | `upper_left -> "upper left"
+            | `lower_left -> "lower left"
+            | `lower_right -> "lower right"
+            | `right -> "right"
+            | `center_left -> "center left"
+            | `center_right -> "center right"
+            | `lower_center -> "lower center"
+            | `upper_center -> "upper center"
+            | `center -> "center"
+          in
+          "loc", Py.String.of_string loc)
+      in
+      List.filter_opt [ loc ]
+    in
+    ignore (Py.Module.get_function_with_keywords t "legend" [||] keywords)
+
+  let plot = Mpl.plot
+  let hist = Mpl.hist
 end
 
 module Fig = struct
@@ -67,6 +91,17 @@ module Fig = struct
     let t = create ?figsize () in
     let ax = add_subplot t ~nrows:1 ~ncols:1 ~index:1 in
     t, ax
+
+  let create_with_two_axes ?figsize orientation =
+    let t = create ?figsize () in
+    let nrows, ncols =
+      match orientation with
+      | `horizontal -> 1, 2
+      | `vertical -> 2, 1
+    in
+    let ax1 = add_subplot t ~nrows ~ncols ~index:1 in
+    let ax2 = add_subplot t ~nrows ~ncols ~index:2 in
+    t, ax1, ax2
 
   let suptitle t title =
     ignore (t.&("suptitle")[| Py.String.of_string title |])
