@@ -111,6 +111,14 @@ let show () =
   let p = pyplot_module () in
   ignore (p.&("show")[| |])
 
+let style_available () =
+  let p = pyplot_module () in
+  p.@$("style").@$("available") |> Py.List.to_list_map Py.String.to_string
+
+let style_use s =
+  let p = pyplot_module () in
+  ignore (p.@$("style").&("use")[| Py.String.of_string s |])
+
 module Public = struct
   module Backend = Backend
   module Color = Color
@@ -120,6 +128,8 @@ module Public = struct
   let show = show
   let savefig = savefig
   let plot_data = plot_data
+  let style_available = style_available
+  let style_use = style_use
 end
 
 let float_array_to_python xs =

@@ -70,6 +70,8 @@ module Public : sig
   val show : unit -> unit
   val savefig : string -> unit
   val plot_data : [`png | `jpg] -> string
+  val style_available : unit -> string list
+  val style_use : string -> unit
 end
 
 (* Only internal functions below. *)

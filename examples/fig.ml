@@ -30,6 +30,8 @@ let right_graph ax =
   Ax.set_ylabel ax "Frequency"
 
 let () =
+  Mpl.style_available () |> List.iter ~f:Stdio.print_endline;
+  Mpl.style_use "ggplot";
   let fig, ax1, ax2 = Fig.create_with_two_axes `horizontal in
   left_graph ax1;
   right_graph ax2;
