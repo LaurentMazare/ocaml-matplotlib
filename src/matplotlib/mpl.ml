@@ -110,3 +110,14 @@ let plot_data format =
 let show () =
   let p = pyplot_module () in
   ignore (p.&("show")[| |])
+
+module Public = struct
+  module Backend = Backend
+  module Color = Color
+  module Linestyle = Linestyle
+
+  let set_backend = set_backend
+  let show = show
+  let savefig = savefig
+  let plot_data = plot_data
+end
