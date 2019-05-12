@@ -71,3 +71,13 @@ module Public : sig
   val savefig : string -> unit
   val plot_data : [`png | `jpg] -> string
 end
+
+(* Only internal functions below. *)
+val plot
+  :  Py.Object.t
+  -> ?color:Color.t
+  -> ?linewidth:float
+  -> ?linestyle:Linestyle.t
+  -> ?xs:float array
+  -> float array
+  -> unit
