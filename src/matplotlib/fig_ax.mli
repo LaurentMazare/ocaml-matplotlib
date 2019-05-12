@@ -2,6 +2,8 @@ module Ax : sig
   type t
 
   val set_title : t -> string -> unit
+  val set_xlim : t -> left:float -> right:float -> unit
+  val set_ylim : t -> bottom:float -> top:float -> unit
   val set_xlabel : t -> string -> unit
   val set_ylabel : t -> string -> unit
   val grid : t -> ?which:[`major|`minor|`both] -> ?axis:[`both|`x|`y] -> bool -> unit

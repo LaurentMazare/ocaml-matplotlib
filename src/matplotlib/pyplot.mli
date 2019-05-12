@@ -1,3 +1,5 @@
+val xlim : left:float -> right:float -> unit
+val ylim : bottom:float -> top:float -> unit
 val xlabel : string -> unit
 val ylabel : string -> unit
 val grid : bool -> unit

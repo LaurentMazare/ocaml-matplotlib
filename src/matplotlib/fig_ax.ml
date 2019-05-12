@@ -7,6 +7,12 @@ module Ax = struct
   let set_title t title =
     ignore (t.&("set_title")[| Py.String.of_string title |])
 
+  let set_xlim t ~left ~right =
+    ignore (t.&("set_xlim")[| Py.Float.of_float left; Py.Float.of_float right |])
+
+  let set_ylim t ~bottom ~top =
+    ignore (t.&("set_ylim")[| Py.Float.of_float bottom; Py.Float.of_float top |])
+
   let set_xlabel t label =
     ignore (t.&("set_xlabel")[| Py.String.of_string label |])
 
