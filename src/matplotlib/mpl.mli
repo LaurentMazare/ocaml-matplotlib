@@ -15,6 +15,8 @@ module Color : sig
     | Yellow
     | Orange
     | Other of string
+
+  val to_pyobject : t -> Py.Object.t
 end
 
 module Linestyle : sig
@@ -22,28 +24,14 @@ module Linestyle : sig
     | Solid
     | Dotted
     | Other of string
+
+  val to_pyobject : t -> Py.Object.t
 end
 
-(* Vector of float *)
-module V : sig
-  type t
-  val l : float list -> t
-  val a : float array -> t
-end
+(* [set_backend] has to be called before any other operation. *)
+val set_backend : Backend.t -> unit
 
-val init : Backend.t -> unit
-val xlabel : string -> unit
-val ylabel : string -> unit
-val grid : bool -> unit
-val title : string -> unit
-
-val plot
-  :  ?color:Color.t
-  -> ?linewidth:float
-  -> ?linestyle:Linestyle.t
-  -> ?xs:V.t
-  -> V.t
-  -> unit
+val pyplot_module : unit -> Py.Object.t
 
 val show : unit -> unit
 val savefig : string -> unit

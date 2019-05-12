@@ -1,11 +1,16 @@
 open Base
 open Pyops
 
-let plt_module = ref None
+let pyplot_module = ref None
 
 let maybe_py_init () =
   if not (Py.is_initialized ())
-  then Py.initialize ()
+  then begin
+    Py.initialize ();
+    (* Reinstall the default signal handler as it may have been
+       overriden when launching python. *)
+    Caml.Sys.(set_signal sigint Signal_default)
+  end
 
 module Backend = struct
   type t =
@@ -26,16 +31,16 @@ let init_ backend =
     ignore (plt.&("switch_backend")[| Py.String.of_string backend_str |]));
   plt
 
-let init backend =
+let set_backend backend =
   let plt = init_ backend in
-  plt_module := Some plt
+  pyplot_module := Some plt
 
-let maybe_init () =
-  match !plt_module with
+let pyplot_module () =
+  match !pyplot_module with
   | Some t -> t
   | None ->
     let t = init_ Default in
-    plt_module := Some t;
+    pyplot_module := Some t;
     t
 
 module Color = struct
@@ -80,40 +85,12 @@ module Linestyle = struct
     Py.String.of_string str
 end
 
-module V = struct
-  type t = Py.Object.t
-
-  let l xs =
-    maybe_py_init ();
-    Py.List.of_list_map Py.Float.of_float xs
-
-  let a xs =
-    maybe_py_init ();
-    Py.List.of_array_map Py.Float.of_float xs
-end
-
-let xlabel label =
-  let t = maybe_init () in
-  ignore (t.&("xlabel")[| Py.String.of_string label |])
-
-let title label =
-  let t = maybe_init () in
-  ignore (t.&("title")[| Py.String.of_string label |])
-
-let ylabel label =
-  let t = maybe_init () in
-  ignore (t.&("ylabel")[| Py.String.of_string label |])
-
-let grid b =
-  let t = maybe_init () in
-  ignore (t.&("grid")[| Py.Bool.of_bool b |])
-
 let savefig filename =
-  let t = maybe_init () in
-  ignore (t.&("savefig")[| Py.String.of_string filename |])
+  let p = pyplot_module () in
+  ignore (p.&("savefig")[| Py.String.of_string filename |])
 
 let plot_data format =
-  let t = maybe_init () in
+  let p = pyplot_module () in
   let format =
     match format with
     | `png -> "png"
@@ -123,29 +100,13 @@ let plot_data format =
   let bytes_io = io.&("BytesIO")[||] in
   let _ =
     Py.Module.get_function_with_keywords
-      t
+      p
       "savefig"
       [| bytes_io |]
       [ "format", Py.String.of_string format ]
   in
   bytes_io.&("getvalue")[||] |> Py.String.to_string
 
-let plot ?color ?linewidth ?linestyle ?xs ys =
-  let t = maybe_init () in
-  let keywords =
-    List.filter_opt
-      [ Option.map color ~f:(fun color -> "color", Color.to_pyobject color)
-      ; Option.map linewidth ~f:(fun lw -> "linewidth", Py.Float.of_float lw)
-      ; Option.map linestyle ~f:(fun ls -> "linestyle", Linestyle.to_pyobject ls)
-      ]
-  in
-  let args =
-    match xs with
-    | Some xs -> [| xs; ys |]
-    | None -> [| ys |]
-  in
-  ignore (Py.Module.get_function_with_keywords t "plot" args keywords)
-
 let show () =
-  let t = maybe_init () in
-  ignore (t.&("show")[| |])
+  let p = pyplot_module () in
+  ignore (p.&("show")[| |])

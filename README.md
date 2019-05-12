@@ -1,2 +1,2 @@
 # ocaml-matplotlib
-Plotting for ocaml based on matplotlib.pyplot
+Plotting for ocaml using matplotlib pyplot and object-orient apis.
