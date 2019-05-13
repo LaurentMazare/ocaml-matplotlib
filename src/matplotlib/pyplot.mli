@@ -23,3 +23,15 @@ val hist
   -> ?xs:float array list
   -> float array
   -> unit
+
+val scatter
+  :  ?s:float
+  -> ?c:Mpl.Color.t
+  (* Possible markers:
+     'o', 'v', '^', '<', '>', '8', 's', 'p', '*', 'h', 'H', 'D', 'd', 'P', 'X'
+  *)
+  -> ?marker:char
+  -> ?alpha:float
+  -> ?linewidths:float
+  -> (float * float) array
+  -> unit

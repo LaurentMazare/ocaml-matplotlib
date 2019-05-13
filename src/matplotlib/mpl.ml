@@ -181,3 +181,17 @@ let hist p ?label ?color ?bins ?orientation ?histtype ?xs ys =
     | None -> [| float_array_to_python ys |]
   in
   ignore (Py.Module.get_function_with_keywords p "hist" args keywords)
+
+let scatter p ?s ?c ?marker ?alpha ?linewidths xys =
+  let keywords =
+    List.filter_opt
+      [ Option.map c ~f:(fun c -> "c", Color.to_pyobject c)
+      ; Option.map s ~f:(fun s -> "s", Py.Float.of_float s)
+      ; Option.map marker ~f:(fun m -> "marker", String.of_char m |> Py.String.of_string)
+      ; Option.map alpha ~f:(fun a -> "alpha", Py.Float.of_float a)
+      ; Option.map linewidths ~f:(fun l -> "linewidths", Py.Float.of_float l)
+      ]
+  in
+  let xs = Py.List.of_array_map (fun (x, _) -> Py.Float.of_float x) xys in
+  let ys = Py.List.of_array_map (fun (_, y) -> Py.Float.of_float y) xys in
+  ignore (Py.Module.get_function_with_keywords p "scatter" [| xs; ys |] keywords)

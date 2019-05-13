@@ -32,3 +32,7 @@ let plot ?label ?color ?linewidth ?linestyle ?xs ys =
 let hist ?label ?color ?bins ?orientation ?histtype ?xs ys =
   let p = Mpl.pyplot_module () in
   Mpl.hist p ?label ?color ?bins ?orientation ?histtype ?xs ys
+
+let scatter ?s ?c ?marker ?alpha ?linewidths xys =
+  let p = Mpl.pyplot_module () in
+  Mpl.scatter p ?s ?c ?marker ?alpha ?linewidths xys

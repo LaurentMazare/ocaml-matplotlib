@@ -37,3 +37,28 @@ let () =
   right_graph ax2;
   Fig.suptitle fig "the figure suptitle";
   Mpl.show ()
+
+let () =
+  let fig, ax = Fig.create_with_ax () in
+  let xys1 =
+    Array.init 1000 ~f:(fun i ->
+      let f = Float.of_int i /. 20. in
+      Float.sin f, Float.cos f)
+  in
+  let xys2 =
+    Array.init 1000 ~f:(fun i ->
+      let f = Float.of_int i /. 20. in
+      let rho = 1. +. Float.cos f in
+      rho *. Float.sin f, rho *. Float.cos f)
+  in
+  let xys3 =
+    Array.init 1000 ~f:(fun i ->
+      let f = Float.of_int i /. 20. in
+      let rho = 1.5 +. 0.2 *. Float.cos (5. *. f) in
+      rho *. Float.sin f, rho *. Float.cos f)
+  in
+  Ax.scatter ax ~s:4. ~c:Green ~marker:'o' ~alpha:0.5 xys1;
+  Ax.scatter ax ~s:4. ~c:Red ~marker:'X' xys2;
+  Ax.scatter ax ~c:Blue ~marker:'*' xys3;
+  Fig.suptitle fig "...scatter...";
+  Mpl.show ()

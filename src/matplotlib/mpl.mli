@@ -86,7 +86,7 @@ val plot
   -> unit
 
 val hist
-  : Py.Object.t
+  :  Py.Object.t
   -> ?label:string
   -> ?color:Color.t
   -> ?bins:int
@@ -94,4 +94,17 @@ val hist
   -> ?histtype:[ `bar | `barstacked | `step | `stepfilled ]
   -> ?xs:float array list
   -> float array
+  -> unit
+
+val scatter
+  :  Py.Object.t
+  -> ?s:float
+  -> ?c:Color.t
+  (* Possible markers:
+     'o', 'v', '^', '<', '>', '8', 's', 'p', '*', 'h', 'H', 'D', 'd', 'P', 'X'
+  *)
+  -> ?marker:char
+  -> ?alpha:float
+  -> ?linewidths:float
+  -> (float * float) array
   -> unit

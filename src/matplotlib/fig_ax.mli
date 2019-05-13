@@ -6,6 +6,7 @@ module Ax : sig
   val set_ylim : t -> bottom:float -> top:float -> unit
   val set_xlabel : t -> string -> unit
   val set_ylabel : t -> string -> unit
+  val set_aspect : t -> aspect:[`auto|`equal|`f of float] -> unit
   val grid : t -> ?which:[`major|`minor|`both] -> ?axis:[`both|`x|`y] -> bool -> unit
   val legend
     :  ?loc:
@@ -42,6 +43,19 @@ module Ax : sig
     -> ?histtype:[ `bar | `barstacked | `step | `stepfilled ]
     -> ?xs:float array list
     -> float array
+    -> unit
+
+  val scatter
+    :  t
+    -> ?s:float
+    -> ?c:Mpl.Color.t
+    (* Possible markers:
+       'o', 'v', '^', '<', '>', '8', 's', 'p', '*', 'h', 'H', 'D', 'd', 'P', 'X'
+    *)
+    -> ?marker:char
+    -> ?alpha:float
+    -> ?linewidths:float
+    -> (float * float) array
     -> unit
 end
 

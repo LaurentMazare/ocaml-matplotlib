@@ -19,6 +19,15 @@ module Ax = struct
   let set_ylabel t label =
     ignore (t.&("set_ylabel")[| Py.String.of_string label |])
 
+  let set_aspect t ~aspect =
+    let aspect =
+      match aspect with
+      | `auto -> Py.String.of_string "auto"
+      | `equal -> Py.String.of_string  "equal"
+      | `f f -> Py.Float.of_float f
+    in
+    ignore (t.&("set_aspect")[| aspect |])
+
   let grid t ?which ?axis b =
     let keywords =
       let b = Some ("b", Py.Bool.of_bool b) in
@@ -72,6 +81,7 @@ module Ax = struct
 
   let plot = Mpl.plot
   let hist = Mpl.hist
+  let scatter = Mpl.scatter
 end
 
 module Fig = struct
