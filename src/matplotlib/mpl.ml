@@ -26,10 +26,10 @@ end
 
 let init_ backend =
   maybe_py_init ();
-  let plt = Py.import "matplotlib.pyplot" in
+  let mpl = Py.import "matplotlib" in
   Option.iter (Backend.to_string_option backend) ~f:(fun backend_str ->
-    ignore (plt.&("switch_backend")[| Py.String.of_string backend_str |]));
-  plt
+    ignore (mpl.&("use")[| Py.String.of_string backend_str |]));
+  Py.import "matplotlib.pyplot"
 
 let set_backend backend =
   let plt = init_ backend in
