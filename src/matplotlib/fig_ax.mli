@@ -57,6 +57,10 @@ module Ax : sig
     -> ?linewidths:float
     -> (float * float) array
     -> unit
+
+  module Expert : sig
+    val to_pyobject : t -> Py.Object.t
+  end
 end
 
 module Fig : sig
@@ -76,4 +80,8 @@ module Fig : sig
   val create_with_two_axes : ?figsize:(float * float) -> [`horizontal|`vertical] -> t * Ax.t * Ax.t
 
   val suptitle : t -> string -> unit
+
+  module Expert : sig
+    val to_pyobject : t -> Py.Object.t
+  end
 end

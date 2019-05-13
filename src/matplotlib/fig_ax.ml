@@ -82,6 +82,10 @@ module Ax = struct
   let plot = Mpl.plot
   let hist = Mpl.hist
   let scatter = Mpl.scatter
+
+  module Expert = struct
+    let to_pyobject = Fn.id
+  end
 end
 
 module Fig = struct
@@ -121,4 +125,8 @@ module Fig = struct
 
   let suptitle t title =
     ignore (t.&("suptitle")[| Py.String.of_string title |])
+
+  module Expert = struct
+    let to_pyobject = Fn.id
+  end
 end
