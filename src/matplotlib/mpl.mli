@@ -108,3 +108,21 @@ val scatter
   -> ?linewidths:float
   -> (float * float) array
   -> unit
+
+module Imshow_data : sig
+  type t
+
+  type 'a typ_
+  val int : int typ_
+  val float : float typ_
+
+  val scalar : 'a typ_ -> 'a array array -> t
+  val rgb : 'a typ_ -> ('a * 'a * 'a) array array -> t
+  val rgba : 'a typ_ -> ('a * 'a * 'a * 'a) array array -> t
+end
+
+val imshow
+  :  Py.Object.t
+  -> ?cmap:string
+  -> Imshow_data.t
+  -> unit

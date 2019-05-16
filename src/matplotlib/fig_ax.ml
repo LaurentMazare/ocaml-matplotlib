@@ -82,6 +82,7 @@ module Ax = struct
   let plot = Mpl.plot
   let hist = Mpl.hist
   let scatter = Mpl.scatter
+  let imshow = Mpl.imshow
 
   module Expert = struct
     let to_pyobject = Fn.id

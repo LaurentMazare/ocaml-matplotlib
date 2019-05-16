@@ -58,6 +58,12 @@ module Ax : sig
     -> (float * float) array
     -> unit
 
+  val imshow
+    :  t
+    -> ?cmap:string
+    -> Mpl.Imshow_data.t
+    -> unit
+
   module Expert : sig
     val to_pyobject : t -> Py.Object.t
   end

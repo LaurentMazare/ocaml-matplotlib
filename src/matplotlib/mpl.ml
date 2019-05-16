@@ -195,3 +195,54 @@ let scatter p ?s ?c ?marker ?alpha ?linewidths xys =
   let xs = Py.List.of_array_map (fun (x, _) -> Py.Float.of_float x) xys in
   let ys = Py.List.of_array_map (fun (_, y) -> Py.Float.of_float y) xys in
   ignore (Py.Module.get_function_with_keywords p "scatter" [| xs; ys |] keywords)
+
+module Imshow_data = struct
+  type 'a data =
+    | Scalar of 'a array array
+    | Rgb of ('a * 'a * 'a) array array
+    | Rgba of ('a * 'a * 'a * 'a) array array
+
+  type 'a typ_ =
+    | Int : int typ_
+    | Float : float typ_
+
+  let int = Int
+  let float = Float
+
+  type t = P : ('a data * 'a typ_) -> t
+
+  let scalar typ_ data = P (Scalar data, typ_)
+  let rgb typ_ data = P (Rgb data, typ_)
+  let rgba typ_ data = P (Rgba data, typ_)
+
+  let to_pyobject (type a) (P (data, typ_)) =
+    let to_pyobject ~scalar_to_pyobject =
+      match data with
+      | Scalar data ->
+        Py.List.of_array_map (Py.List.of_array_map scalar_to_pyobject) data
+      | Rgb data ->
+        let rgb_to_pyobject (r, g, b) =
+          (scalar_to_pyobject r, scalar_to_pyobject g, scalar_to_pyobject b)
+          |> Py.Tuple.of_tuple3
+        in
+        Py.List.of_array_map (Py.List.of_array_map rgb_to_pyobject) data
+      | Rgba data ->
+        let rgba_to_pyobject (r, g, b, a) =
+          (scalar_to_pyobject r, scalar_to_pyobject g, scalar_to_pyobject b, scalar_to_pyobject a)
+          |> Py.Tuple.of_tuple4
+        in
+        Py.List.of_array_map (Py.List.of_array_map rgba_to_pyobject) data
+    in
+    match typ_ with
+    | Int -> to_pyobject ~scalar_to_pyobject:Py.Int.of_int
+    | Float -> to_pyobject ~scalar_to_pyobject:Py.Float.of_float
+end
+
+let imshow p ?cmap data =
+  let keywords =
+    List.filter_opt
+      [ Option.map cmap ~f:(fun c -> "cmap", Py.String.of_string c)
+      ]
+  in
+  let data = Imshow_data.to_pyobject data in
+  ignore (Py.Module.get_function_with_keywords p "imshow" [| data |] keywords)

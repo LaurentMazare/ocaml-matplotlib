@@ -62,3 +62,28 @@ let () =
   Ax.scatter ax ~c:Blue ~marker:'*' xys3;
   Fig.suptitle fig "...scatter...";
   Mpl.show ()
+
+let () =
+  let fig, ax1, ax2 = Fig.create_with_two_axes `horizontal in
+  let data1 =
+    Array.init 128 ~f:(fun i ->
+      Array.init 128 ~f:(fun j ->
+        i + j))
+    |> Imshow_data.scalar Imshow_data.int
+  in
+  Ax.grid ax1 false;
+  Ax.imshow ax1 data1;
+  Ax.set_title ax1 "scalar - default cmap";
+  let data2 =
+    Array.init 128 ~f:(fun i ->
+      Array.init 128 ~f:(fun j ->
+        let i = Float.of_int i *. 0.1 in
+        let j = Float.of_int j *. 0.1 in
+        Float.(abs (cos i), abs (sin j), abs (cos (0.1 *. (i+.j))))))
+    |> Imshow_data.rgb Imshow_data.float
+  in
+  Ax.grid ax2 false;
+  Ax.imshow ax2 data2;
+  Ax.set_title ax2 "rgb";
+  Fig.suptitle fig "imshow";
+  Mpl.show ()

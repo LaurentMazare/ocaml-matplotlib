@@ -35,3 +35,8 @@ val scatter
   -> ?linewidths:float
   -> (float * float) array
   -> unit
+
+val imshow
+  :  ?cmap:string
+  -> Mpl.Imshow_data.t
+  -> unit
