@@ -215,7 +215,7 @@ module Imshow_data = struct
   let rgb typ_ data = P (Rgb data, typ_)
   let rgba typ_ data = P (Rgba data, typ_)
 
-  let to_pyobject (type a) (P (data, typ_)) =
+  let to_pyobject (P (data, typ_)) =
     let to_pyobject ~scalar_to_pyobject =
       match data with
       | Scalar data ->
