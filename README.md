@@ -3,7 +3,7 @@ Plotting for ocaml using matplotlib pyplot and object-orient apis.
 
 
 ## Use in Jupyter notebooks
-To use in an `ocaml` `jupyter` notebook, you can add the following in you jupyter init script, or in a notebook cell.
+To use in an [ocaml jupyter notebook](https://github.com/akabe/ocaml-jupyter), you can add the following in you jupyter init script, or in a notebook cell.
 
 ```ocaml
 open Matplotlib;;
