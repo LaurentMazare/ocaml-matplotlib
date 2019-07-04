@@ -17,7 +17,6 @@ depends: [
   "base" {>= "0.11.0"}
   "stdio"
   "pyml"
-  "jupyter"
   "dune" {build}
   "ocaml" {>= "4.06"}
 ]
@@ -30,3 +29,9 @@ conflicts: [
 
 available: [
 ]
+
+synopsis: "Plotting using Matplotlib through python"
+description: """
+This provides bindings to Matplotlib for various types of plots using pyml
+to interface with python.
+"""
