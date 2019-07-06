@@ -3,27 +3,27 @@ open Pyops
 
 let title label =
   let p = Mpl.pyplot_module () in
-  ignore (p.&("title")[| Py.String.of_string label |])
+  ignore ((p.&("title")) [| Py.String.of_string label |])
 
 let xlabel label =
   let p = Mpl.pyplot_module () in
-  ignore (p.&("xlabel")[| Py.String.of_string label |])
+  ignore ((p.&("xlabel")) [| Py.String.of_string label |])
 
 let ylabel label =
   let p = Mpl.pyplot_module () in
-  ignore (p.&("ylabel")[| Py.String.of_string label |])
+  ignore ((p.&("ylabel")) [| Py.String.of_string label |])
 
 let xlim ~left ~right =
   let p = Mpl.pyplot_module () in
-  ignore (p.&("xlim")[| Py.Float.of_float left; Py.Float.of_float right |])
+  ignore ((p.&("xlim")) [| Py.Float.of_float left; Py.Float.of_float right |])
 
 let ylim ~bottom ~top =
   let p = Mpl.pyplot_module () in
-  ignore (p.&("ylim")[| Py.Float.of_float bottom; Py.Float.of_float top |])
+  ignore ((p.&("ylim")) [| Py.Float.of_float bottom; Py.Float.of_float top |])
 
 let grid b =
   let p = Mpl.pyplot_module () in
-  ignore (p.&("grid")[| Py.Bool.of_bool b |])
+  ignore ((p.&("grid")) [| Py.Bool.of_bool b |])
 
 let plot ?label ?color ?linewidth ?linestyle ?xs ys =
   let p = Mpl.pyplot_module () in

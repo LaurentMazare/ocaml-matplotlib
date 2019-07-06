@@ -20,9 +20,9 @@ let left_graph ax =
 let right_graph ax =
   let rnds =
     Array.init 5000 ~f:(fun _ ->
-      let u1 = Random.float 1. in
-      let u2 = Random.float 1. in
-      Float.cos (2. *. 3.1415 *. u1) *. Float.sqrt (-. 2. *. Float.log u2))
+        let u1 = Random.float 1. in
+        let u2 = Random.float 1. in
+        Float.cos (2. *. 3.1415 *. u1) *. Float.sqrt (-2. *. Float.log u2))
   in
   Ax.hist ax rnds ~bins:50;
   Ax.set_title ax "hist";
@@ -42,20 +42,20 @@ let () =
   let fig, ax = Fig.create_with_ax () in
   let xys1 =
     Array.init 1000 ~f:(fun i ->
-      let f = Float.of_int i /. 20. in
-      Float.sin f, Float.cos f)
+        let f = Float.of_int i /. 20. in
+        Float.sin f, Float.cos f)
   in
   let xys2 =
     Array.init 1000 ~f:(fun i ->
-      let f = Float.of_int i /. 20. in
-      let rho = 1. +. Float.cos f in
-      rho *. Float.sin f, rho *. Float.cos f)
+        let f = Float.of_int i /. 20. in
+        let rho = 1. +. Float.cos f in
+        rho *. Float.sin f, rho *. Float.cos f)
   in
   let xys3 =
     Array.init 1000 ~f:(fun i ->
-      let f = Float.of_int i /. 20. in
-      let rho = 1.5 +. 0.2 *. Float.cos (5. *. f) in
-      rho *. Float.sin f, rho *. Float.cos f)
+        let f = Float.of_int i /. 20. in
+        let rho = 1.5 +. (0.2 *. Float.cos (5. *. f)) in
+        rho *. Float.sin f, rho *. Float.cos f)
   in
   Ax.scatter ax ~s:4. ~c:Green ~marker:'o' ~alpha:0.5 xys1;
   Ax.scatter ax ~s:4. ~c:Red ~marker:'X' xys2;
@@ -66,9 +66,7 @@ let () =
 let () =
   let fig, ax1, ax2 = Fig.create_with_two_axes `horizontal in
   let data1 =
-    Array.init 128 ~f:(fun i ->
-      Array.init 128 ~f:(fun j ->
-        i + j))
+    Array.init 128 ~f:(fun i -> Array.init 128 ~f:(fun j -> i + j))
     |> Imshow_data.scalar Imshow_data.int
   in
   Ax.grid ax1 false;
@@ -76,10 +74,10 @@ let () =
   Ax.set_title ax1 "scalar - default cmap";
   let data2 =
     Array.init 128 ~f:(fun i ->
-      Array.init 128 ~f:(fun j ->
-        let i = Float.of_int i *. 0.1 in
-        let j = Float.of_int j *. 0.1 in
-        Float.(abs (cos i), abs (sin j), abs (cos (0.1 *. (i+.j))))))
+        Array.init 128 ~f:(fun j ->
+            let i = Float.of_int i *. 0.1 in
+            let j = Float.of_int j *. 0.1 in
+            Float.(abs (cos i), abs (sin j), abs (cos (0.1 *. (i +. j))))))
     |> Imshow_data.rgb Imshow_data.float
   in
   Ax.grid ax2 false;

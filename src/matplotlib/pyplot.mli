@@ -27,7 +27,7 @@ val hist
 val scatter
   :  ?s:float
   -> ?c:Mpl.Color.t
-  (* Possible markers:
+        (* Possible markers:
      'o', 'v', '^', '<', '>', '8', 's', 'p', '*', 'h', 'H', 'D', 'd', 'P', 'X'
   *)
   -> ?marker:char
@@ -36,7 +36,4 @@ val scatter
   -> (float * float) array
   -> unit
 
-val imshow
-  :  ?cmap:string
-  -> Mpl.Imshow_data.t
-  -> unit
+val imshow : ?cmap:string -> Mpl.Imshow_data.t -> unit

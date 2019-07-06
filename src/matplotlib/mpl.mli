@@ -30,12 +30,10 @@ end
 
 (* [set_backend] has to be called before any other operation. *)
 val set_backend : Backend.t -> unit
-
 val pyplot_module : unit -> Py.Object.t
-
 val show : unit -> unit
 val savefig : string -> unit
-val plot_data : [`png | `jpg] -> string
+val plot_data : [ `png | `jpg ] -> string
 
 module Public : sig
   module Backend : sig
@@ -64,12 +62,11 @@ module Public : sig
       | Other of string
   end
 
-
   (* [set_backend] has to be called before any other operation. *)
   val set_backend : Backend.t -> unit
   val show : unit -> unit
   val savefig : string -> unit
-  val plot_data : [`png | `jpg] -> string
+  val plot_data : [ `png | `jpg ] -> string
   val style_available : unit -> string list
   val style_use : string -> unit
 end
@@ -100,7 +97,7 @@ val scatter
   :  Py.Object.t
   -> ?s:float
   -> ?c:Color.t
-  (* Possible markers:
+        (* Possible markers:
      'o', 'v', '^', '<', '>', '8', 's', 'p', '*', 'h', 'H', 'D', 'd', 'P', 'X'
   *)
   -> ?marker:char
@@ -111,18 +108,13 @@ val scatter
 
 module Imshow_data : sig
   type t
-
   type 'a typ_
+
   val int : int typ_
   val float : float typ_
-
   val scalar : 'a typ_ -> 'a array array -> t
   val rgb : 'a typ_ -> ('a * 'a * 'a) array array -> t
   val rgba : 'a typ_ -> ('a * 'a * 'a * 'a) array array -> t
 end
 
-val imshow
-  :  Py.Object.t
-  -> ?cmap:string
-  -> Imshow_data.t
-  -> unit
+val imshow : Py.Object.t -> ?cmap:string -> Imshow_data.t -> unit
