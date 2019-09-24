@@ -14,10 +14,10 @@ install: []
 remove:  []
 
 depends: [
-  "base" {>= "0.11.0"}
+  "base" {>= "v0.11.0"}
   "stdio"
-  "pyml"
-  "dune" {build}
+  "pyml" {>= "20180530"}
+  "dune" {>= "1.4"}
   "ocaml" {>= "4.06"}
 ]
 
