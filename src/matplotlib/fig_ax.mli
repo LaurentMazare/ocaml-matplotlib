@@ -16,20 +16,7 @@ module Ax : sig
     -> unit
 
   val legend
-    :  ?loc:[ `best
-            | `upper_right
-            | `upper_left
-            | `lower_left
-            | `lower_right
-            | `right
-            | `center_left
-            | `center_right
-            | `lower_center
-            | `upper_center
-            | `center
-            ]
-    -> t
-    -> unit
+    :  t -> ?labels:string array -> ?loc:Mpl.Loc.t -> unit -> unit
 
   val plot
     :  t
