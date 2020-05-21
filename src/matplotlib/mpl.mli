@@ -28,6 +28,24 @@ module Linestyle : sig
   val to_pyobject : t -> Py.Object.t
 end
 
+module Loc : sig
+  type t =
+    | Best
+    | UpperRight
+    | UpperLeft
+    | LowerLeft
+    | LowerRight
+    | Right
+    | CenterLeft
+    | CenterRight
+    | LowerCenter
+    | UpperCenter
+    | Center
+
+  val to_pyobject : t -> Py.Object.t
+end
+
+
 (* [set_backend] has to be called before any other operation. *)
 val set_backend : Backend.t -> unit
 val pyplot_module : unit -> Py.Object.t
@@ -60,6 +78,21 @@ module Public : sig
       | Solid
       | Dotted
       | Other of string
+  end
+
+  module Loc : sig
+    type t =
+      | Best
+      | UpperRight
+      | UpperLeft
+      | LowerLeft
+      | LowerRight
+      | Right
+      | CenterLeft
+      | CenterRight
+      | LowerCenter
+      | UpperCenter
+      | Center
   end
 
   (* [set_backend] has to be called before any other operation. *)
@@ -118,3 +151,10 @@ module Imshow_data : sig
 end
 
 val imshow : Py.Object.t -> ?cmap:string -> Imshow_data.t -> unit
+
+val legend
+  : Py.Object.t
+  -> ?labels:string array
+  -> ?loc:Loc.t
+  -> unit
+  -> unit

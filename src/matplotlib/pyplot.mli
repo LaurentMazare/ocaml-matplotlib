@@ -37,3 +37,5 @@ val scatter
   -> unit
 
 val imshow : ?cmap:string -> Mpl.Imshow_data.t -> unit
+
+val legend : ?labels:(string array) -> ?loc:Mpl.Loc.t -> unit -> unit

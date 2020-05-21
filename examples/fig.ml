@@ -15,7 +15,7 @@ let left_graph ax =
   Ax.grid ax true;
   Ax.plot ax ~label:"sin1" ~color:Red ~xs ys1;
   Ax.plot ax ~label:"sin2" ~color:Green ~linestyle:Dotted ~linewidth:2. ~xs ys2;
-  Ax.legend ax
+  Ax.legend ax ()
 
 let right_graph ax =
   let rnds =

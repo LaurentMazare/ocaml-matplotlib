@@ -84,6 +84,36 @@ module Linestyle = struct
     Py.String.of_string str
 end
 
+module Loc = struct
+  type t =
+    | Best
+    | UpperRight
+    | UpperLeft
+    | LowerLeft
+    | LowerRight
+    | Right
+    | CenterLeft
+    | CenterRight
+    | LowerCenter
+    | UpperCenter
+    | Center
+
+  let to_pyobject t =
+    let str = match t with
+      | Best -> "best"
+      | UpperRight -> "upper right"
+      | UpperLeft -> "upper left"
+      | LowerLeft -> "lower left"
+      | LowerRight -> "lower right"
+      | Right -> "right"
+      | CenterLeft -> "center left"
+      | CenterRight -> "center right"
+      | LowerCenter -> "lower center"
+      | UpperCenter -> "upper center"
+      | Center -> "center"
+    in Py.String.of_string str
+end
+
 let savefig filename =
   let p = pyplot_module () in
   ignore ((p.&("savefig")) [| Py.String.of_string filename |])
@@ -122,6 +152,7 @@ module Public = struct
   module Backend = Backend
   module Color = Color
   module Linestyle = Linestyle
+  module Loc = Loc
 
   let set_backend = set_backend
   let show = show
@@ -245,3 +276,11 @@ let imshow p ?cmap data =
   in
   let data = Imshow_data.to_pyobject data in
   ignore (Py.Module.get_function_with_keywords p "imshow" [| data |] keywords)
+
+let legend p ?labels ?loc () =
+  let keywords = List.filter_opt
+    [ Option.map labels ~f:(fun labels -> "labels",
+       Py.List.of_array_map Py.String.of_string labels)
+    ; Option.map loc ~f:(fun loc -> "loc", Loc.to_pyobject loc)
+    ] in
+  ignore (Py.Module.get_function_with_keywords p "legend" [||] keywords)

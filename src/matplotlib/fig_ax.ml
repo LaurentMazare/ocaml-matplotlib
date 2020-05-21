@@ -51,34 +51,11 @@ module Ax = struct
     in
     ignore (Py.Module.get_function_with_keywords t "grid" [||] keywords)
 
-  let legend ?loc t =
-    let keywords =
-      let loc =
-        Option.map loc ~f:(fun loc ->
-            let loc =
-              match loc with
-              | `best -> "best"
-              | `upper_right -> "upper right"
-              | `upper_left -> "upper left"
-              | `lower_left -> "lower left"
-              | `lower_right -> "lower right"
-              | `right -> "right"
-              | `center_left -> "center left"
-              | `center_right -> "center right"
-              | `lower_center -> "lower center"
-              | `upper_center -> "upper center"
-              | `center -> "center"
-            in
-            "loc", Py.String.of_string loc)
-      in
-      List.filter_opt [ loc ]
-    in
-    ignore (Py.Module.get_function_with_keywords t "legend" [||] keywords)
-
   let plot = Mpl.plot
   let hist = Mpl.hist
   let scatter = Mpl.scatter
   let imshow = Mpl.imshow
+  let legend = Mpl.legend
 
   module Expert = struct
     let to_pyobject = Fn.id

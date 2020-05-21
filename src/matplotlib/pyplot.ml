@@ -40,3 +40,7 @@ let scatter ?s ?c ?marker ?alpha ?linewidths xys =
 let imshow ?cmap xys =
   let p = Mpl.pyplot_module () in
   Mpl.imshow p ?cmap xys
+
+let legend ?labels ?loc () =
+  let p = Mpl.pyplot_module () in
+  Mpl.legend p ?labels ?loc ()
