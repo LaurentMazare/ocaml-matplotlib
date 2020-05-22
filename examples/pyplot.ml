@@ -14,6 +14,8 @@ let () =
   Pyplot.grid true;
   Pyplot.plot ~color:Red ~xs ys1;
   Pyplot.plot ~color:Green ~linestyle:Dotted ~linewidth:2. ~xs ys2;
+  Pyplot.fill_between ~alpha:0.3
+    xs ys1 (Array.create ~len:(Array.length ys1) 0.);
   Pyplot.legend ~labels:[|"$y=\\sin(x/20)$"; "$y=\\cos(x/12)$"|] ();
   Mpl.savefig "test.png";
   let data = Mpl.plot_data `png in

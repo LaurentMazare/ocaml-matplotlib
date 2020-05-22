@@ -115,6 +115,15 @@ val plot
   -> float array
   -> unit
 
+val fill_between
+  : Py.Object.t
+  -> ?color:Color.t
+  -> ?alpha:float
+  -> float array
+  -> float array
+  -> float array
+  -> unit
+
 val hist
   :  Py.Object.t
   -> ?label:string

@@ -180,6 +180,15 @@ let plot p ?label ?color ?linewidth ?linestyle ?xs ys =
   in
   ignore (Py.Module.get_function_with_keywords p "plot" args keywords)
 
+let fill_between p ?color ?alpha xs ys1 ys2 =
+  let keywords = List.filter_opt
+    [ Option.map color ~f:(fun color -> "color", Color.to_pyobject color)
+    ; Option.map alpha ~f:(fun alpha -> "alpha", Py.Float.of_float alpha)
+    ]
+  in
+  let args = Array.map [|xs; ys1; ys2|] float_array_to_python in
+  ignore (Py.Module.get_function_with_keywords p "fill_between" args keywords)
+
 let hist p ?label ?color ?bins ?orientation ?histtype ?xs ys =
   let keywords =
     List.filter_opt

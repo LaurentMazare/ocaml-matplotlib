@@ -14,6 +14,14 @@ val plot
   -> float array
   -> unit
 
+val fill_between
+  : ?color:Mpl.Color.t
+  -> ?alpha:float
+  -> float array
+  -> float array
+  -> float array
+  -> unit
+
 val hist
   :  ?label:string
   -> ?color:Mpl.Color.t
