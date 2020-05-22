@@ -164,7 +164,7 @@ end
 
 let float_array_to_python xs = Py.List.of_array_map Py.Float.of_float xs
 
-let plot p ?label ?color ?linewidth ?linestyle ?xs ys =
+let call_plot_func p func ?label ?color ?linewidth ?linestyle ?xs ys =
   let keywords =
     List.filter_opt
       [ Option.map color ~f:(fun color -> "color", Color.to_pyobject color)
@@ -178,7 +178,25 @@ let plot p ?label ?color ?linewidth ?linestyle ?xs ys =
     | Some xs -> [| float_array_to_python xs; float_array_to_python ys |]
     | None -> [| float_array_to_python ys |]
   in
-  ignore (Py.Module.get_function_with_keywords p "plot" args keywords)
+  let func_name = match func with
+  | `plot -> "plot"
+  | `semilogy -> "semilogy"
+  | `semilogx -> "semilogx"
+  | `loglog -> "loglog"
+  in
+  ignore (Py.Module.get_function_with_keywords p func_name args keywords)
+
+let plot p ?label ?color ?linewidth ?linestyle ?xs ys =
+  call_plot_func p `plot ?label ?color ?linewidth ?linestyle ?xs ys
+
+let semilogy p ?label ?color ?linewidth ?linestyle ?xs ys =
+  call_plot_func p `semilogy ?label ?color ?linewidth ?linestyle ?xs ys
+
+let semilogx p ?label ?color ?linewidth ?linestyle ?xs ys =
+  call_plot_func p `semilogx ?label ?color ?linewidth ?linestyle ?xs ys
+
+let loglog p ?label ?color ?linewidth ?linestyle ?xs ys =
+  call_plot_func p `loglog ?label ?color ?linewidth ?linestyle ?xs ys
 
 let fill_between p ?color ?alpha xs ys1 ys2 =
   let keywords = List.filter_opt

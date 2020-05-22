@@ -115,6 +115,36 @@ val plot
   -> float array
   -> unit
 
+val semilogy
+  :  Py.Object.t
+  -> ?label:string
+  -> ?color:Color.t
+  -> ?linewidth:float
+  -> ?linestyle:Linestyle.t
+  -> ?xs:float array
+  -> float array
+  -> unit
+
+val semilogx
+  :  Py.Object.t
+  -> ?label:string
+  -> ?color:Color.t
+  -> ?linewidth:float
+  -> ?linestyle:Linestyle.t
+  -> ?xs:float array
+  -> float array
+  -> unit
+
+val loglog
+  :  Py.Object.t
+  -> ?label:string
+  -> ?color:Color.t
+  -> ?linewidth:float
+  -> ?linestyle:Linestyle.t
+  -> ?xs:float array
+  -> float array
+  -> unit
+
 val fill_between
   : Py.Object.t
   -> ?color:Color.t

@@ -14,6 +14,33 @@ val plot
   -> float array
   -> unit
 
+val semilogy
+  :  ?label:string
+  -> ?color:Mpl.Color.t
+  -> ?linewidth:float
+  -> ?linestyle:Mpl.Linestyle.t
+  -> ?xs:float array
+  -> float array
+  -> unit
+
+val semilogx
+  :  ?label:string
+  -> ?color:Mpl.Color.t
+  -> ?linewidth:float
+  -> ?linestyle:Mpl.Linestyle.t
+  -> ?xs:float array
+  -> float array
+  -> unit
+
+val loglog
+  :  ?label:string
+  -> ?color:Mpl.Color.t
+  -> ?linewidth:float
+  -> ?linestyle:Mpl.Linestyle.t
+  -> ?xs:float array
+  -> float array
+  -> unit
+
 val fill_between
   : ?color:Mpl.Color.t
   -> ?alpha:float
