@@ -29,6 +29,22 @@ let plot ?label ?color ?linewidth ?linestyle ?xs ys =
   let p = Mpl.pyplot_module () in
   Mpl.plot p ?label ?color ?linewidth ?linestyle ?xs ys
 
+let semilogy ?label ?color ?linewidth ?linestyle ?xs ys =
+  let p = Mpl.pyplot_module () in
+  Mpl.semilogy p ?label ?color ?linewidth ?linestyle ?xs ys
+
+let semilogx ?label ?color ?linewidth ?linestyle ?xs ys =
+  let p = Mpl.pyplot_module () in
+  Mpl.semilogx p ?label ?color ?linewidth ?linestyle ?xs ys
+
+let loglog ?label ?color ?linewidth ?linestyle ?xs ys =
+  let p = Mpl.pyplot_module () in
+  Mpl.loglog p ?label ?color ?linewidth ?linestyle ?xs ys
+
+let fill_between ?color ?alpha xs ys1 ys2 =
+  let p = Mpl.pyplot_module () in
+  Mpl.fill_between p ?color ?alpha xs ys1 ys2
+
 let hist ?label ?color ?bins ?orientation ?histtype ?xs ys =
   let p = Mpl.pyplot_module () in
   Mpl.hist p ?label ?color ?bins ?orientation ?histtype ?xs ys
