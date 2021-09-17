@@ -53,6 +53,10 @@ let scatter ?s ?c ?marker ?alpha ?linewidths xys =
   let p = Mpl.pyplot_module () in
   Mpl.scatter p ?s ?c ?marker ?alpha ?linewidths xys
 
+let scatter_3d ?s ?c ?marker ?alpha ?linewidths xyzs =
+  let p = Mpl.pyplot_module () in
+  Mpl.scatter_3d p ?s ?c ?marker ?alpha ?linewidths xyzs
+
 let imshow ?cmap xys =
   let p = Mpl.pyplot_module () in
   Mpl.imshow p ?cmap xys

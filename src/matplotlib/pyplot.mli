@@ -71,6 +71,15 @@ val scatter
   -> (float * float) array
   -> unit
 
+val scatter_3d
+  :  ?s:float
+  -> ?c:Mpl.Color.t
+  -> ?marker:char
+  -> ?alpha:float
+  -> ?linewidths:float
+  -> (float * float * float) array
+  -> unit
+
 val imshow : ?cmap:string -> Mpl.Imshow_data.t -> unit
 
 val legend : ?labels:(string array) -> ?loc:Mpl.Loc.t -> unit -> unit

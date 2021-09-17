@@ -52,6 +52,16 @@ module Ax : sig
     -> (float * float) array
     -> unit
 
+  val scatter_3d
+    :  t
+    -> ?s:float
+    -> ?c:Mpl.Color.t
+    -> ?marker:char
+    -> ?alpha:float
+    -> ?linewidths:float
+    -> (float * float * float) array
+    -> unit
+
   val imshow : t -> ?cmap:string -> Mpl.Imshow_data.t -> unit
 
   module Expert : sig
@@ -70,6 +80,7 @@ module Fig : sig
      increases to the right.
   *)
   val add_subplot : t -> nrows:int -> ncols:int -> index:int -> Ax.t
+  val add_subplot_3d : t -> nrows:int -> ncols:int -> index:int -> Ax.t
   val create_with_ax : ?figsize:float * float -> unit -> t * Ax.t
 
   val create_with_two_axes

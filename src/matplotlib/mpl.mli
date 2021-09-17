@@ -178,6 +178,16 @@ val scatter
   -> (float * float) array
   -> unit
 
+val scatter_3d
+  :  Py.Object.t
+  -> ?s:float
+  -> ?c:Color.t
+  -> ?marker:char
+  -> ?alpha:float
+  -> ?linewidths:float
+  -> (float * float * float) array
+  -> unit
+
 module Imshow_data : sig
   type t
   type 'a typ_

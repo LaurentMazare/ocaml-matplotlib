@@ -252,6 +252,21 @@ let scatter p ?s ?c ?marker ?alpha ?linewidths xys =
   let ys = Py.List.of_array_map (fun (_, y) -> Py.Float.of_float y) xys in
   ignore (Py.Module.get_function_with_keywords p "scatter" [| xs; ys |] keywords)
 
+let scatter_3d p ?s ?c ?marker ?alpha ?linewidths xyzs =
+  let keywords =
+    List.filter_opt
+      [ Option.map c ~f:(fun c -> "c", Color.to_pyobject c)
+      ; Option.map s ~f:(fun s -> "s", Py.Float.of_float s)
+      ; Option.map marker ~f:(fun m -> "marker", String.of_char m |> Py.String.of_string)
+      ; Option.map alpha ~f:(fun a -> "alpha", Py.Float.of_float a)
+      ; Option.map linewidths ~f:(fun l -> "linewidths", Py.Float.of_float l)
+      ]
+  in
+  let xs = Py.List.of_array_map (fun (x, _, _) -> Py.Float.of_float x) xyzs in
+  let ys = Py.List.of_array_map (fun (_, y, _) -> Py.Float.of_float y) xyzs in
+  let zs = Py.List.of_array_map (fun (_, _, z) -> Py.Float.of_float z) xyzs in
+  ignore (Py.Module.get_function_with_keywords p "scatter" [| xs; ys; zs |] keywords)
+
 module Imshow_data = struct
   type 'a data =
     | Scalar of 'a array array

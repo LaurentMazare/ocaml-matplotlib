@@ -54,6 +54,7 @@ module Ax = struct
   let plot = Mpl.plot
   let hist = Mpl.hist
   let scatter = Mpl.scatter
+  let scatter_3d = Mpl.scatter_3d
   let imshow = Mpl.imshow
   let legend = Mpl.legend
 
@@ -78,6 +79,11 @@ module Fig = struct
 
   let add_subplot t ~nrows ~ncols ~index =
     let keywords = [] in
+    let args = [| nrows; ncols; index |] |> Array.map ~f:Py.Int.of_int in
+    Py.Module.get_function_with_keywords t "add_subplot" args keywords
+
+  let add_subplot_3d t ~nrows ~ncols ~index =
+    let keywords = [ "projection", Py.String.of_string "3d" ] in
     let args = [| nrows; ncols; index |] |> Array.map ~f:Py.Int.of_int in
     Py.Module.get_function_with_keywords t "add_subplot" args keywords
 
