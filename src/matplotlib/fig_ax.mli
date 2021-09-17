@@ -59,6 +59,35 @@ module Ax : sig
   end
 end
 
+module Ax3d : sig
+  type t
+
+  val set_title : t -> string -> unit
+  val set_xlim : t -> left:float -> right:float -> unit
+  val set_ylim : t -> bottom:float -> top:float -> unit
+  val set_zlim : t -> bottom:float -> top:float -> unit
+  val set_xlabel : t -> string -> unit
+  val set_ylabel : t -> string -> unit
+  val set_zlabel : t -> string -> unit
+  val grid : t -> bool -> unit
+
+  val scatter
+    :  t
+    -> ?s:float
+    -> ?c:Mpl.Color.t
+    -> ?marker:char
+    -> ?alpha:float
+    -> ?linewidths:float
+    -> (float * float * float) array
+    -> unit
+
+  val imshow : t -> ?cmap:string -> Mpl.Imshow_data.t -> unit
+
+  module Expert : sig
+    val to_pyobject : t -> Py.Object.t
+  end
+end
+
 module Fig : sig
   type t
 
@@ -70,6 +99,7 @@ module Fig : sig
      increases to the right.
   *)
   val add_subplot : t -> nrows:int -> ncols:int -> index:int -> Ax.t
+  val add_subplot_3d : t -> nrows:int -> ncols:int -> index:int -> Ax3d.t
   val create_with_ax : ?figsize:float * float -> unit -> t * Ax.t
 
   val create_with_two_axes

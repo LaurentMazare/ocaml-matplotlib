@@ -62,6 +62,32 @@ module Ax = struct
   end
 end
 
+module Ax3d = struct
+  type t = Py.Object.t
+
+  let set_title = Ax.set_title
+  let set_xlim = Ax.set_xlim
+  let set_ylim = Ax.set_ylim
+  let set_xlabel = Ax.set_xlabel
+  let set_ylabel = Ax.set_ylabel
+
+  let set_zlim t ~bottom ~top =
+    ignore ((t.&("set_zlim")) [| Py.Float.of_float bottom; Py.Float.of_float top |])
+
+  let set_zlabel t label = ignore ((t.&("set_zlabel")) [| Py.String.of_string label |])
+
+  let grid t b =
+    let keywords = [ "b", Py.Bool.of_bool b ] in
+    ignore (Py.Module.get_function_with_keywords t "grid" [||] keywords)
+
+  let scatter = Mpl.scatter_3d
+  let imshow = Mpl.imshow
+
+  module Expert = struct
+    let to_pyobject = Fn.id
+  end
+end
+
 module Fig = struct
   type t = Py.Object.t
 
@@ -78,6 +104,11 @@ module Fig = struct
 
   let add_subplot t ~nrows ~ncols ~index =
     let keywords = [] in
+    let args = [| nrows; ncols; index |] |> Array.map ~f:Py.Int.of_int in
+    Py.Module.get_function_with_keywords t "add_subplot" args keywords
+
+  let add_subplot_3d t ~nrows ~ncols ~index =
+    let keywords = [ "projection", Py.String.of_string "3d" ] in
     let args = [| nrows; ncols; index |] |> Array.map ~f:Py.Int.of_int in
     Py.Module.get_function_with_keywords t "add_subplot" args keywords
 
